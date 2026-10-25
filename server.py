@@ -28,8 +28,12 @@ def book_places(club, competition, places):
     club['points'] = int(club['points']) - places
 
 
+MAX_PLACES_PER_CLUB = 12
+
+
 def validate_booking(club, competition, places):
-    """Retourne un message d'erreur si la reservation est impossible, sinon None."""
+    if places > MAX_PLACES_PER_CLUB:
+        return "Sorry, you cannot book more than 12 places per competition."
     if places > int(club['points']):
         return "Sorry, you do not have enough points."
     return None
