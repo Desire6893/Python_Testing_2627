@@ -22,6 +22,12 @@ def find_club_by_email(email, clubs_list):
     return None
 
 
+def book_places(club, competition, places):
+    """Retire les places de la competition et les points du club (1 point = 1 place)."""
+    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places
+    club['points'] = int(club['points']) - places
+
+
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
@@ -57,7 +63,7 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+    book_places(club, competition, placesRequired)
     flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
 
