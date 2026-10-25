@@ -4,7 +4,6 @@ import server
 
 @pytest.fixture
 def client():
-    """Un faux navigateur pour tester l'appli sans l'ouvrir."""
     server.app.config["TESTING"] = True
     with server.app.test_client() as client:
         yield client
@@ -12,7 +11,6 @@ def client():
 
 @pytest.fixture
 def clubs(monkeypatch):
-    """Des clubs de test, pour ne pas toucher aux vrais fichiers JSON."""
     test_clubs = [
         {"name": "Club Test", "email": "test@club.com", "points": "10"},
         {"name": "Petit Club", "email": "petit@club.com", "points": "4"},
@@ -24,7 +22,6 @@ def clubs(monkeypatch):
 
 @pytest.fixture
 def competitions(monkeypatch):
-    """Des compétitions de test, pour ne pas toucher aux vrais fichiers JSON."""
     test_competitions = [
         {"name": "Competition Future", "date": "2030-06-01 10:00:00", "numberOfPlaces": "20"},
         {"name": "Competition Passee", "date": "2020-03-27 10:00:00", "numberOfPlaces": "25"},
@@ -32,3 +29,10 @@ def competitions(monkeypatch):
     ]
     monkeypatch.setattr(server, "competitions", test_competitions)
     return test_competitions
+
+
+@pytest.fixture(autouse=True)
+def bookings(monkeypatch):
+    test_bookings = {}
+    monkeypatch.setattr(server, "bookings", test_bookings, raising=False)
+    return test_bookings
