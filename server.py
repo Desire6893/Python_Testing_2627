@@ -28,6 +28,13 @@ def book_places(club, competition, places):
     club['points'] = int(club['points']) - places
 
 
+def validate_booking(club, competition, places):
+    """Retourne un message d'erreur si la reservation est impossible, sinon None."""
+    if places > int(club['points']):
+        return "Sorry, you do not have enough points."
+    return None
+
+
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
@@ -63,6 +70,10 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
+    error = validate_booking(club, competition, placesRequired)
+    if error:
+        flash(error)
+        return render_template('booking.html', club=club, competition=competition)
     book_places(club, competition, placesRequired)
     flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
