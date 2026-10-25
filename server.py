@@ -14,6 +14,14 @@ def loadCompetitions():
          return listOfCompetitions
 
 
+def find_club_by_email(email, clubs_list):
+    """Retourne le club qui a cet email, ou None s'il n'existe pas."""
+    for club in clubs_list:
+        if club['email'] == email:
+            return club
+    return None
+
+
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
@@ -24,10 +32,13 @@ clubs = loadClubs()
 def index():
     return render_template('index.html')
 
-@app.route('/showSummary',methods=['POST'])
+@app.route('/showSummary', methods=['POST'])
 def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
-    return render_template('welcome.html',club=club,competitions=competitions)
+    club = find_club_by_email(request.form.get('email', ''), clubs)
+    if club is None:
+        flash("Sorry, this email is not registered.")
+        return render_template('index.html')
+    return render_template('welcome.html', club=club, competitions=competitions)
 
 
 @app.route('/book/<competition>/<club>')
@@ -51,7 +62,6 @@ def purchasePlaces():
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
-# TODO: Add route for points display
 
 
 @app.route('/logout')
