@@ -15,24 +15,29 @@ def loadCompetitions():
 
 
 def find_club_by_email(email, clubs_list):
-    """Retourne le club qui a cet email, ou None s'il n'existe pas."""
     for club in clubs_list:
         if club['email'] == email:
             return club
     return None
 
 
+MAX_PLACES_PER_CLUB = 12
+bookings = {}
+
+
+def get_booked_places(club, competition):
+    return bookings.get(competition['name'], {}).get(club['name'], 0)
+
+
 def book_places(club, competition, places):
-    """Retire les places de la competition et les points du club (1 point = 1 place)."""
     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places
     club['points'] = int(club['points']) - places
-
-
-MAX_PLACES_PER_CLUB = 12
+    competition_bookings = bookings.setdefault(competition['name'], {})
+    competition_bookings[club['name']] = get_booked_places(club, competition) + places
 
 
 def validate_booking(club, competition, places):
-    if places > MAX_PLACES_PER_CLUB:
+    if get_booked_places(club, competition) + places > MAX_PLACES_PER_CLUB:
         return "Sorry, you cannot book more than 12 places per competition."
     if places > int(club['points']):
         return "Sorry, you do not have enough points."
