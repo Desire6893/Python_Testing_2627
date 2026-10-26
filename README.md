@@ -104,7 +104,7 @@ Merci !
         - admin@irontemple.com (Iron Temple, 4 points)
         - kate@shelifts.co.uk (She Lifts, 12 points)
     * Organisation des tests :
-        - tests/unit : 57 tests unitaires
+        - tests/unit : 61 tests unitaires
         - tests/integration : 28 tests d'integration
         - tests/functional : 3 tests fonctionnels
         - tests/performance : scenario Locust
