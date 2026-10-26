@@ -43,6 +43,8 @@ def is_past_competition(competition):
 
 
 def validate_booking(club, competition, places):
+    if places <= 0:
+        return "Sorry, the number of places must be greater than 0."
     if is_past_competition(competition):
         return "Sorry, this competition has already taken place."
     if get_booked_places(club, competition) + places > MAX_PLACES_PER_CLUB:
