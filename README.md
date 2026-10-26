@@ -81,7 +81,7 @@ Merci !
     Pour le regenerer (dans env_outils) : flake8 --format=html --htmldir=rapports/flake8
     Documentation : [flake8](https://flake8.pycqa.org/)
 
-7. Configurations particulieres (Windows)
+7. Configurations particulieres (Python 3.11, Windows et Mac)
 
     * Python 3.11 obligatoire : les versions du requirements.txt (Werkzeug 1.0.1) ne fonctionnent pas
       avec Python 3.12 et plus (erreur "module 'ast' has no attribute 'Str'", constatee avec Python 3.15)
@@ -94,6 +94,14 @@ Merci !
       py -3.11 -m virtualenv env_outils
       env_outils\Scripts\activate
       pip install -r requirements-outils.txt
+    * Sur Mac / Linux :
+      python3.11 -m pip install virtualenv
+      python3.11 -m virtualenv env
+      source env/bin/activate
+      pip install -r requirements.txt
+      export FLASK_APP=server.py puis python -m flask run
+    * Si l'environnement est cree avec "virtualenv ." (point 3), pytest ne cherche les tests que
+      dans le dossier tests (fichier pytest.ini) et flake8 ignore les dossiers bin, lib et include.
 
 8. Tests et rapports
 
