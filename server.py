@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from flask import Flask,render_template,request,redirect,flash,url_for
 
 
@@ -36,7 +37,14 @@ def book_places(club, competition, places):
     competition_bookings[club['name']] = get_booked_places(club, competition) + places
 
 
+def is_past_competition(competition):
+    competition_date = datetime.strptime(competition['date'], "%Y-%m-%d %H:%M:%S")
+    return competition_date < datetime.now()
+
+
 def validate_booking(club, competition, places):
+    if is_past_competition(competition):
+        return "Sorry, this competition has already taken place."
     if get_booked_places(club, competition) + places > MAX_PLACES_PER_CLUB:
         return "Sorry, you cannot book more than 12 places per competition."
     if places > int(competition['numberOfPlaces']):
