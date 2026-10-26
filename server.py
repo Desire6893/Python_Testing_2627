@@ -60,6 +60,11 @@ app.secret_key = 'something_special'
 competitions = loadCompetitions()
 clubs = loadClubs()
 
+
+@app.context_processor
+def template_helpers():
+    return {'is_past_competition': is_past_competition}
+
 @app.route('/')
 def index():
     return render_template('index.html')
