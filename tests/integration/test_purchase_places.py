@@ -48,3 +48,15 @@ def test_achat_refuse_si_12_places_depassees_en_plusieurs_fois(client, clubs, co
     })
     assert b"Sorry, you cannot book more than 12 places per competition." in reponse.data
     assert int(clubs[2]["points"]) == 10
+
+    
+def test_achat_refuse_si_plus_de_places_que_disponibles(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Test",
+        "competition": "Petite Competition",
+        "places": "3",
+    })
+    assert reponse.status_code == 200
+    assert b"Sorry, there are not enough places left in this competition." in reponse.data
+    assert int(clubs[0]["points"]) == 10
+    assert int(competitions[2]["numberOfPlaces"]) == 2
