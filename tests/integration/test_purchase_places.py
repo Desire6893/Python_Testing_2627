@@ -60,3 +60,15 @@ def test_achat_refuse_si_plus_de_places_que_disponibles(client, clubs, competiti
     assert b"Sorry, there are not enough places left in this competition." in reponse.data
     assert int(clubs[0]["points"]) == 10
     assert int(competitions[2]["numberOfPlaces"]) == 2
+
+    
+def test_achat_refuse_si_competition_passee(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Test",
+        "competition": "Competition Passee",
+        "places": "1",
+    })
+    assert reponse.status_code == 200
+    assert b"Sorry, this competition has already taken place." in reponse.data
+    assert int(clubs[0]["points"]) == 10
+    assert int(competitions[1]["numberOfPlaces"]) == 25
