@@ -55,6 +55,11 @@ def parse_places(value):
         return None
 
 
+def booking_confirmation_message(places):
+    word = "place" if places == 1 else "places"
+    return f"Great-booking complete! You have booked {places} {word}."
+
+
 def validate_booking(club, competition, places):
     if places <= 0:
         return "Sorry, the number of places must be greater than 0."
@@ -125,7 +130,7 @@ def purchasePlaces():
         flash(error)
         return render_template('booking.html', club=club, competition=competition)
     book_places(club, competition, placesRequired)
-    flash('Great-booking complete!')
+    flash(booking_confirmation_message(placesRequired))
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
