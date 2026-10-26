@@ -108,3 +108,32 @@ def test_achat_refuse_si_places_vide(client, clubs, competitions):
     assert reponse.status_code == 200
     assert b"Sorry, please enter a valid number of places." in reponse.data
     assert int(clubs[0]["points"]) == 10
+
+    
+
+def test_achat_club_inconnu(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Inconnu",
+        "competition": "Competition Future",
+        "places": "1",
+    })
+    assert reponse.status_code == 200
+    assert b"Something went wrong-please try again" in reponse.data
+    assert int(competitions[0]["numberOfPlaces"]) == 20
+
+
+def test_achat_competition_inconnue(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Test",
+        "competition": "Competition Inconnue",
+        "places": "1",
+    })
+    assert reponse.status_code == 200
+    assert b"Something went wrong-please try again" in reponse.data
+    assert int(clubs[0]["points"]) == 10
+
+
+def test_achat_formulaire_vide(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={})
+    assert reponse.status_code == 200
+    assert b"Something went wrong-please try again" in reponse.data
