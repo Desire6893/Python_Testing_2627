@@ -12,7 +12,6 @@ def test_find_by_name_trouve_la_competition(competitions):
 def test_find_by_name_inconnu_retourne_none(clubs):
     assert find_by_name(clubs, "Club Inconnu") is None
 
-    
 
 def test_find_by_name_competition_inconnue_retourne_none(competitions):
     assert find_by_name(competitions, "Competition Inconnue") is None

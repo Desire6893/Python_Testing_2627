@@ -20,7 +20,6 @@ def test_achat_refuse_si_pas_assez_de_points(client, clubs, competitions):
     assert int(clubs[1]["points"]) == 4
     assert int(competitions[0]["numberOfPlaces"]) == 20
 
-    
 
 def test_achat_refuse_si_plus_de_12_places(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={
@@ -33,7 +32,6 @@ def test_achat_refuse_si_plus_de_12_places(client, clubs, competitions):
     assert int(clubs[2]["points"]) == 20
     assert int(competitions[0]["numberOfPlaces"]) == 20
 
-    
 
 def test_achat_refuse_si_12_places_depassees_en_plusieurs_fois(client, clubs, competitions):
     client.post("/purchasePlaces", data={
@@ -49,7 +47,7 @@ def test_achat_refuse_si_12_places_depassees_en_plusieurs_fois(client, clubs, co
     assert b"Sorry, you cannot book more than 12 places per competition." in reponse.data
     assert int(clubs[2]["points"]) == 10
 
-    
+
 def test_achat_refuse_si_plus_de_places_que_disponibles(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={
         "club": "Club Test",
@@ -61,7 +59,7 @@ def test_achat_refuse_si_plus_de_places_que_disponibles(client, clubs, competiti
     assert int(clubs[0]["points"]) == 10
     assert int(competitions[2]["numberOfPlaces"]) == 2
 
-    
+
 def test_achat_refuse_si_competition_passee(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={
         "club": "Club Test",
@@ -73,7 +71,6 @@ def test_achat_refuse_si_competition_passee(client, clubs, competitions):
     assert int(clubs[0]["points"]) == 10
     assert int(competitions[1]["numberOfPlaces"]) == 25
 
-    
 
 def test_achat_refuse_si_places_negatives(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={
@@ -86,7 +83,6 @@ def test_achat_refuse_si_places_negatives(client, clubs, competitions):
     assert int(clubs[0]["points"]) == 10
     assert int(competitions[0]["numberOfPlaces"]) == 20
 
-    
 
 def test_achat_refuse_si_places_en_lettres(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={
@@ -109,7 +105,6 @@ def test_achat_refuse_si_places_vide(client, clubs, competitions):
     assert b"Sorry, please enter a valid number of places." in reponse.data
     assert int(clubs[0]["points"]) == 10
 
-    
 
 def test_achat_club_inconnu(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={
@@ -138,7 +133,7 @@ def test_achat_formulaire_vide(client, clubs, competitions):
     assert reponse.status_code == 200
     assert b"Something went wrong-please try again" in reponse.data
 
-    
+
 def test_achat_affiche_le_nombre_de_places_achetees(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={
         "club": "Club Test",

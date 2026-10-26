@@ -1,18 +1,18 @@
 import json
 from datetime import datetime
-from flask import Flask,render_template,request,redirect,flash,url_for
+from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 def loadClubs():
     with open('clubs.json') as c:
-         listOfClubs = json.load(c)['clubs']
-         return listOfClubs
+        listOfClubs = json.load(c)['clubs']
+        return listOfClubs
 
 
 def loadCompetitions():
     with open('competitions.json') as comps:
-         listOfCompetitions = json.load(comps)['competitions']
-         return listOfCompetitions
+        listOfCompetitions = json.load(comps)['competitions']
+        return listOfCompetitions
 
 
 def find_club_by_email(email, clubs_list):
@@ -27,6 +27,7 @@ def find_by_name(items, name):
         if item['name'] == name:
             return item
     return None
+
 
 MAX_PLACES_PER_CLUB = 12
 bookings = {}
@@ -89,9 +90,11 @@ clubs = loadClubs()
 def template_helpers():
     return {'is_past_competition': is_past_competition}
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/showSummary', methods=['POST'])
 def showSummary():

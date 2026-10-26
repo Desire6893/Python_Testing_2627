@@ -14,4 +14,3 @@ def test_page_reservation_competition_inconnue(client, clubs, competitions):
     reponse = client.get("/book/Competition%20Inconnue/Club%20Test")
     assert reponse.status_code == 200
     assert b"Something went wrong-please try again" in reponse.data
-    

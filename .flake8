@@ -1,0 +1,3 @@
+[flake8]
+max-line-length = 119
+exclude = env, env_outils, .git, __pycache__, .pytest_cache, htmlcov, rapports
