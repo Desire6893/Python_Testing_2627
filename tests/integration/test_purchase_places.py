@@ -137,3 +137,13 @@ def test_achat_formulaire_vide(client, clubs, competitions):
     reponse = client.post("/purchasePlaces", data={})
     assert reponse.status_code == 200
     assert b"Something went wrong-please try again" in reponse.data
+
+    
+def test_achat_affiche_le_nombre_de_places_achetees(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Test",
+        "competition": "Competition Future",
+        "places": "3",
+    })
+    assert reponse.status_code == 200
+    assert b"Great-booking complete! You have booked 3 places." in reponse.data
