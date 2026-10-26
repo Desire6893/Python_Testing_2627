@@ -42,6 +42,13 @@ def is_past_competition(competition):
     return competition_date < datetime.now()
 
 
+def parse_places(value):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def validate_booking(club, competition, places):
     if places <= 0:
         return "Sorry, the number of places must be greater than 0."
@@ -95,7 +102,10 @@ def book(competition,club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
-    placesRequired = int(request.form['places'])
+    placesRequired = parse_places(request.form.get('places', ''))
+    if placesRequired is None:
+        flash("Sorry, please enter a valid number of places.")
+        return render_template('booking.html', club=club, competition=competition)
     error = validate_booking(club, competition, placesRequired)
     if error:
         flash(error)
