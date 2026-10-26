@@ -99,9 +99,13 @@ Merci !
 
     * Framework de test : [pytest](https://docs.pytest.org/) avec [pytest-cov](https://pytest-cov.readthedocs.io/)
     * Lancer les tests (dans env) : python -m pytest
+    * Emails acceptes pour se connecter (fichier clubs.json) :
+        - john@simplylift.co (Simply Lift, 13 points)
+        - admin@irontemple.com (Iron Temple, 4 points)
+        - kate@shelifts.co.uk (She Lifts, 12 points)
     * Organisation des tests :
         - tests/unit : 57 tests unitaires
-        - tests/integration : 27 tests d'integration
+        - tests/integration : 28 tests d'integration
         - tests/functional : 3 tests fonctionnels
         - tests/performance : scenario Locust
     * Rapport de tests et de couverture (dans env) :
@@ -122,6 +126,10 @@ Merci !
         - feat : nouvelle fonctionnalite
         - style, perf, data, config, docs : qualite du code, performance, donnees, configuration, documentation
     * La branche QA est creee depuis main pour la revue, et n'est jamais fusionnee dans main.
+
+10. Apparence
+
+    * Une feuille de style simple se trouve dans static/style.css. Elle est reliee aux 4 pages HTML du dossier templates.    
     
 
 
