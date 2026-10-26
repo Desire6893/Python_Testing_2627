@@ -60,6 +60,10 @@ def booking_confirmation_message(places):
     return f"Great-booking complete! You have booked {places} {word}."
 
 
+def get_points_board(clubs_list):
+    return [{'name': club['name'], 'points': int(club['points'])} for club in clubs_list]
+
+
 def validate_booking(club, competition, places):
     if places <= 0:
         return "Sorry, the number of places must be greater than 0."
@@ -134,6 +138,9 @@ def purchasePlaces():
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
+@app.route('/pointsBoard')
+def pointsBoard():
+    return render_template('points_board.html', board=get_points_board(clubs))
 
 
 @app.route('/logout')
