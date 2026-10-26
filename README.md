@@ -77,7 +77,7 @@ Merci !
    
  6. Flake8 Report 
 
-     Le rapport flake8 se trouve dans rapports/flake8/index.html : aucune erreur dans les 27 fichiers analyses.
+    Le rapport flake8 se trouve dans rapports/flake8/index.html : aucune erreur dans les 29 fichiers analyses.
     Pour le regenerer (dans env_outils) : flake8 --format=html --htmldir=rapports/flake8
     Documentation : [flake8](https://flake8.pycqa.org/)
 
