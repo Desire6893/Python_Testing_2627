@@ -106,10 +106,16 @@ def book(competition, club):
     return render_template('booking.html', club=foundClub, competition=foundCompetition)
 
 
-@app.route('/purchasePlaces',methods=['POST'])
+@app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
-    competition = [c for c in competitions if c['name'] == request.form['competition']][0]
-    club = [c for c in clubs if c['name'] == request.form['club']][0]
+    club = find_by_name(clubs, request.form.get('club', ''))
+    competition = find_by_name(competitions, request.form.get('competition', ''))
+    if club is None:
+        flash("Something went wrong-please try again")
+        return render_template('index.html')
+    if competition is None:
+        flash("Something went wrong-please try again")
+        return render_template('welcome.html', club=club, competitions=competitions)
     placesRequired = parse_places(request.form.get('places', ''))
     if placesRequired is None:
         flash("Sorry, please enter a valid number of places.")
