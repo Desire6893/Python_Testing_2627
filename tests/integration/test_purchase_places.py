@@ -72,3 +72,16 @@ def test_achat_refuse_si_competition_passee(client, clubs, competitions):
     assert b"Sorry, this competition has already taken place." in reponse.data
     assert int(clubs[0]["points"]) == 10
     assert int(competitions[1]["numberOfPlaces"]) == 25
+
+    
+
+def test_achat_refuse_si_places_negatives(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Test",
+        "competition": "Competition Future",
+        "places": "-5",
+    })
+    assert reponse.status_code == 200
+    assert b"Sorry, the number of places must be greater than 0." in reponse.data
+    assert int(clubs[0]["points"]) == 10
+    assert int(competitions[0]["numberOfPlaces"]) == 20
