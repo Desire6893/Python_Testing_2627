@@ -85,3 +85,26 @@ def test_achat_refuse_si_places_negatives(client, clubs, competitions):
     assert b"Sorry, the number of places must be greater than 0." in reponse.data
     assert int(clubs[0]["points"]) == 10
     assert int(competitions[0]["numberOfPlaces"]) == 20
+
+    
+
+def test_achat_refuse_si_places_en_lettres(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Test",
+        "competition": "Competition Future",
+        "places": "abc",
+    })
+    assert reponse.status_code == 200
+    assert b"Sorry, please enter a valid number of places." in reponse.data
+    assert int(clubs[0]["points"]) == 10
+
+
+def test_achat_refuse_si_places_vide(client, clubs, competitions):
+    reponse = client.post("/purchasePlaces", data={
+        "club": "Club Test",
+        "competition": "Competition Future",
+        "places": "",
+    })
+    assert reponse.status_code == 200
+    assert b"Sorry, please enter a valid number of places." in reponse.data
+    assert int(clubs[0]["points"]) == 10
