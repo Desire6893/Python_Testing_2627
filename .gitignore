@@ -8,3 +8,4 @@ env/
 .coverage
 htmlcov/
 .pytest_cache/
+env_outils/
